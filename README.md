@@ -1,1 +1,1 @@
-# NEW_PROJECT
+# LostArk Library
