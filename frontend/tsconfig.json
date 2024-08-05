@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",         // 변환되는 자바스크립트 코드가 사용할 자바스크립트의 버전 명시
+    "module": "ESNext",         // 변환되는 자바스크립트 코드가 사용할 모듈 시스템 정의
+    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",           // 컴파일러 결과 생성되는 자바스크립트 코드들이 어디에 위치할 지.
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "strict": true,             // 엄격한 타입검사
+    "moduleDetection": "force", // 자동으로 모든 타입스크립트 파일들을 개별 모듈로 취급
+    "skipLibCheck": true,       // 라이브러리 타입 정의 파일에서 타입 오류 방지
+    // "strictNullChecks": false
+    "allowSyntheticDefaultImports": true
+  },
+  "ts-node": {
+    "esm": true                 // tsNode로도 esmodule 시스템 실행하기 위해 설정
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
