@@ -16,6 +16,6 @@
   "ts-node": {
     "esm": true                 // tsNode로도 esmodule 시스템 실행하기 위해 설정
   },
-  "include": ["src"],
+  "include": ["src", "setupProxy.js"],
   "exclude": ["node_modules"]
 }
