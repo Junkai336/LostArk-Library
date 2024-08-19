@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 
 import URL from './constants/url';
 
-import { Button } from '@mui/material';
-import CharacterInfo from './pages/Character/CharacterInfo';
+import Home from './components/Home';
+import HomePageMenu from './components/HomePageMenu';
+import NoMatch from './components/NoMatch';
 
-function Home() {
-  return <Button><a href="/">home</a></Button>;
-}
+import CharacterInfo from './pages/Character/CharacterInfo';
 
 function App() {
   const [hello, setHello] = useState('');
@@ -32,12 +31,13 @@ function App() {
 
 
   return (
-    <Router>
-      <Routes>
+    <Routes>
+      <Route path='/' element={<HomePageMenu />}>
+        <Route path="*" element={<NoMatch />} />
         <Route path={URL.HOME} element={<Home />} />
         <Route path={URL.CHARACTER_INFO} element={<CharacterInfo />} />
-      </Routes>
-    </Router>
+      </Route>
+    </Routes>
   );
 }
 
