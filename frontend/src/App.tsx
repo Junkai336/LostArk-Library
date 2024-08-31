@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 
 import URL from './constants/url';
 
-import Home from './components/Home';
+import Home from './pages/Home';
 import HomePageMenu from './components/HomePageMenu';
-import NoMatch from './components/NoMatch';
+import NoMatch from './pages/NoMatch';
 
 import CharacterInfo from './pages/Character/CharacterInfo';
 
