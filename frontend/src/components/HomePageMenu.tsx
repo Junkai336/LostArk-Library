@@ -1,5 +1,7 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+
+import URL from "../constants/url";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,6 +22,8 @@ const pages = ['경매장', '아이템 정보', '파티 찾기'];
 
 function HomePageMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -28,6 +32,15 @@ function HomePageMenu() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const handleSearchChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  }, []);
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (searchQuery) navigate(`${URL.CHARACTER_INFO}?query=${searchQuery}`);
+  }
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -77,7 +90,19 @@ function HomePageMenu() {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+
+            <Box
+              component="img"
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                mr: 2,
+                height: 40,
+              }}
+              alt="로고"
+              src="./favicon.png"
+            >
+            </Box>
+
             <Typography
               variant="h6"
               noWrap
@@ -132,6 +157,7 @@ function HomePageMenu() {
                 ))}
               </Menu>
             </Box>
+
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
               variant="h5"
@@ -151,6 +177,7 @@ function HomePageMenu() {
             >
               LostArk Library
             </Typography>
+
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
@@ -162,15 +189,21 @@ function HomePageMenu() {
                 </Button>
               ))}
             </Box>
-            <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="검색할 캐릭터명을 입력하세요."
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+
+            <Box component="form" onSubmit={handleSearchSubmit} sx={{display: 'flex'}}>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="검색할 캐릭터명을 입력하세요."
+                  inputProps={{ 'aria-label': 'search' }}
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </Search>
+            </Box>
+
           </Toolbar>
         </Container>
       </AppBar>
