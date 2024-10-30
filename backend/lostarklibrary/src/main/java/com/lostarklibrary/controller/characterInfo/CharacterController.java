@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/characterInfo/")
 @RequiredArgsConstructor
 public class CharacterController {
     @Value("${lostark.api.key}")
@@ -20,9 +20,11 @@ public class CharacterController {
 
     private final CharacterService characterService;
 
-    @GetMapping("/characterInfo")
+    @GetMapping("/searchCharacter")
     public Map<String, Object> characterInfoLoading(@PathVariable String characterName) {
         Map<String, Object> paramMap = new HashMap<>();
+
+        paramMap.put("characterName", characterName);
 
         try {
 
