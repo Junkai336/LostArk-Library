@@ -22,7 +22,7 @@ function HomePageMenuContainer() {
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (searchQuery) navigate(`${URL.CHARACTER_INFO}?query=${searchQuery}`);
+    if (searchQuery.trim()) navigate(`${URL.CHARACTER_INFO}?characterName=${searchQuery}`);
   };
 
   return (

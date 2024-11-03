@@ -41,7 +41,9 @@ public class CharacterService {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
             JsonArray jsonArray = JsonParser.parseReader(inputStreamReader).getAsJsonArray();
-            resultMap.put("data", jsonArray);
+            resultMap.put("data", jsonArray.toString());
+
+            System.out.println(resultMap);
         } catch (Exception e) {
             resultMap.put("error", e.getMessage());
 

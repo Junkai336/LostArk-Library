@@ -1,4 +1,4 @@
-function CharacterInfoPresenter() {
+function CharacterInfoPresenter({characterData}: any) {
   return (
     <div>
       ㅁㅁㅁ
