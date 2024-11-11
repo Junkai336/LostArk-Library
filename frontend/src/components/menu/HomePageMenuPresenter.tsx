@@ -1,19 +1,12 @@
 import React from "react";
+import * as Type from "./HomePageMenuType";
+
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Button, MenuItem, InputBase } from '@mui/material';
 import { Menu as MenuIcon, Adb as AdbIcon, Search as SearchIcon } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import { Outlet, useNavigate } from "react-router-dom";
 
 const pages = ['경매장', '도서관', '컨텐츠', '통계', '일정관리', '모집', '커뮤니티'];
-
-interface HomePageMenuPresenterProps {
-  anchorElNav: null | HTMLElement;
-  searchQuery: string;
-  onOpenNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
-  onCloseNavMenu: () => void;
-  onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSearchSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,7 +56,7 @@ function HomePageMenuPresenter({
   onCloseNavMenu,
   onSearchChange,
   onSearchSubmit,
-}: HomePageMenuPresenterProps) {
+}: Type.HomePageMenuPresenterProps) {
   return (
     <>
       <AppBar position="static">

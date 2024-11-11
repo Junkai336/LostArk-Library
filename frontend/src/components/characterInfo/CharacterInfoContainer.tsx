@@ -6,35 +6,48 @@ import * as Type from "./CharacterInfoType";
 function CharacterInfoContainer() {
   // 현재 URL 경로 정보 가져오기
   const location = useLocation();
-  const [characterData, setCharacterData] = useState<Type.Any>();
+
+  const [characterData, setCharacterData] = useState<any | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // 특정 캐릭터 정보 가져오기
   const fetchCharacterData = (characterName: string) => {
-    fetch(`/api/characterInfo/searchCharacter?characterName=${characterName}`)
+    fetch(`/api/characterInfo/searchCharacterDetail?characterName=${characterName}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
+          const responseJson: any = response.json();
+          const errorMessage: any = JSON.parse(responseJson.errorMessage);
+
+          setError(errorMessage);
+          throw new Error(errorMessage);
         }
 
         return response.json();
       })
-      .then(data => {
+      .then(responseJson => {
         // 배열 객체 타입으로 파싱하기
-        const characterData = JSON.parse(data.data);
+        console.log(responseJson);
+        const characterArmoryProfile: Type.CharacterArmoryProfile = JSON.parse(responseJson.characterArmoryProfile);
+        const characterArmoryEquipment: Type.CharacterArmoryEquipment = JSON.parse(responseJson.characterArmoryEquipment);
+
+        const characterData: Type.CharacterDetail = {
+          CharacterArmoryProfile: characterArmoryProfile,
+          CharacterArmoryEquipment: characterArmoryEquipment
+        }
         setCharacterData(characterData);
 
         console.log(characterData);
-        console.log(characterData[0].ServerName);
       })
       .catch(error => {
-        console.error('데이터를 가져오는 중 오류가 발생했습니다. :', error.message);
+        setError("캐릭터 검색 중 오류가 발생했습니다.");
+        console.error(error.message);
       });
   }
 
   // URL 주소가 바뀌면 함수 실행
   useEffect(() => {
     // URL에서 쿼리 파라미터 추출 후 키에 대한 벨류 값 가져옴
-    const characterName = new URLSearchParams(location.search).get("characterName");
+    const characterName: string|null = new URLSearchParams(location.search).get("characterName");
 
     if (characterName) {
       fetchCharacterData(characterName);
@@ -44,6 +57,7 @@ function CharacterInfoContainer() {
   return (
     <CharacterInfoPresenter
       characterDetail={characterData}
+      error={error}
     />
   )
 }

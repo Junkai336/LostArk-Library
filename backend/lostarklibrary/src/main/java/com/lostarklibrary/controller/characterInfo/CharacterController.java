@@ -14,21 +14,37 @@ import java.util.Map;
 public class CharacterController {
     private final CharacterService service;
 
-    // 특정 캐릭터 찾기
-    @GetMapping("/searchCharacter")
-    public Map<String, Object> searchCharacter(@RequestParam String characterName) {
+    // 특정 캐릭터가 가진 원정대 캐릭터들 찾기
+    @GetMapping("/searchCharacterList")
+    public Map<String, Object> searchCharacterList(@RequestParam String characterName) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("characterName", characterName);
 
         try {
-            Map<String, Object> characterInfo = service.searchCharacter(paramMap);
+            Map<String, Object> characterList = service.searchCharacterList(paramMap);
+
+            return characterList;
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("errorMessage", ErrorMessage.SEARCH_CHARACTER_ERROR);
+
+            return errorResponse;
+        }
+    }
+
+    // 특정 캐릭터 찾기
+    @GetMapping("/searchCharacterDetail")
+    public Map<String, Object> searchCharacterDetail(@RequestParam String characterName) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("characterName", characterName);
+
+        try {
+            Map<String, Object> characterInfo = service.searchCharacterDetail(paramMap);
 
             return characterInfo;
         } catch (Exception e) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("error", ErrorMessage.SEARCH_CHARACTER_ERROR);
-
-            System.out.println("에러 발생: " + e.getMessage());
 
             return errorResponse;
         }
